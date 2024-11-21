@@ -1,21 +1,29 @@
-// components/Pagination.tsx
-
-import Link from 'next/link'
 import { Button } from "@/components/ui/button"
 
-export default function Pagination({ currentPage, totalPages }: { currentPage: number, totalPages: number }) {
+type PaginationProps = {
+  currentPage: number
+  totalPages: number
+  onPageChange: (page: number) => void
+}
+
+export default function Pagination({ currentPage, totalPages, onPageChange }: PaginationProps) {
   return (
-    <div className="flex justify-center space-x-2 mt-8">
-      {currentPage > 1 && (
-        <Link href={`/?page=${currentPage - 1}`} passHref>
-          <Button variant="outline">Previous</Button>
-        </Link>
-      )}
-      {currentPage < totalPages && (
-        <Link href={`/?page=${currentPage + 1}`} passHref>
-          <Button variant="outline">Next</Button>
-        </Link>
-      )}
+    <div className="flex justify-center items-center space-x-2 mt-8">
+      <Button
+        onClick={() => onPageChange(currentPage - 1)}
+        disabled={currentPage === 1}
+      >
+        Previous
+      </Button>
+      <span>
+        Page {currentPage} of {totalPages}
+      </span>
+      <Button
+        onClick={() => onPageChange(currentPage + 1)}
+        disabled={currentPage === totalPages}
+      >
+        Next
+      </Button>
     </div>
   )
 }

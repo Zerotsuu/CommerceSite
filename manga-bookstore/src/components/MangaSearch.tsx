@@ -1,20 +1,15 @@
-// components/MangaSearch.tsx
-
 'use client'
 
 import { useState } from 'react'
-import { useRouter } from 'next/navigation'
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
-import { Search } from 'lucide-react'
 
-export default function MangaSearch() {
+export default function MangaSearch({ onSearch }: { onSearch: (search: string) => void }) {
   const [search, setSearch] = useState('')
-  const router = useRouter()
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault()
-    router.push(`/?search=${encodeURIComponent(search)}`)
+    onSearch(search)
   }
 
   return (
@@ -26,10 +21,7 @@ export default function MangaSearch() {
         value={search}
         onChange={(e) => setSearch(e.target.value)}
       />
-      <Button type="submit">
-        <Search className="h-4 w-4 mr-2" />
-        Search
-      </Button>
+      <Button type="submit">Search</Button>
     </form>
   )
 }

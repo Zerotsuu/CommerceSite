@@ -3,31 +3,71 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
-}
-
-model Manga {
-  id          Int      @id @default(autoincrement())
-  title       String
-  author      String
-  genres       String[]
-  price       Float
-  coverImage  String
-  image       String
-  description String?
-  wishlistItems WishlistItem[]
+  provider  = "postgresql"
+  url       = env("POSTGRES_URL")
+  directUrl = env("POSTGRES_URL_NON_POOLING")
 }
 
 model User {
-  id        String   @id
-  email     String   @unique
-  firstName String?
-  lastName  String?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  isAdmin   Boolean  @default(false)
+  id            String        @id @default(cuid())
+  email         String?       @unique
+  firstName     String?
+  lastName      String?
+  clerkId       String?       @unique
+  isAdmin       Boolean       @default(false)
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+  mangaList     MangaList[]
   wishlistItems WishlistItem[]
+  UserProfile   UserProfile?
+}
+
+model UserProfile {
+  id                    String   @id @default(cuid())
+  userId                String   @unique
+  experience            String?
+  favoriteGenres        String[]
+  recommendationSettings Json?    @db.JsonB
+  user                  User     @relation(fields: [userId], references: [id])
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
+
+  @@index([userId])
+}
+
+model MangaList {
+  id         Int      @id @default(autoincrement())
+  userId     String
+  mangaId    Int
+  status     String
+  likeStatus String?
+  addedAt    DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  manga      Manga    @relation(fields: [mangaId], references: [id])
+
+  @@unique([userId, mangaId])
+}
+
+model Manga {
+  id           Int           @id @default(autoincrement())
+  anilistId    Int?          @unique
+  title        String
+  author       String
+  genres       String[]
+  price        Float
+  image        String
+  coverImage   String? //either from anilist or user upload
+  anilistImage String?
+  description  String?
+  averageScore Float?         @default(0)
+  popularity   Int?           @default(0)
+  status       String?       @default("Unknown")
+  volumes      Int?         // Optional volume count
+  chapters     Int?         // Optional chapter count
+  mangaList    MangaList[]
+  wishlistItems WishlistItem[]
+  cartItems    CartItem[]
 }
 
 model WishlistItem {
@@ -35,8 +75,22 @@ model WishlistItem {
   userId    String
   mangaId   Int
   createdAt DateTime @default(now())
-  user      User     @relation(fields: [userId], references: [id])
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   manga     Manga    @relation(fields: [mangaId], references: [id])
 
   @@unique([userId, mangaId])
+}
+
+model CartItem {
+  id        Int      @id @default(autoincrement())
+  userId    String   // Clerk user ID
+  mangaId   Int
+  quantity  Int      @default(1)
+  manga     Manga    @relation(fields: [mangaId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([userId, mangaId]) // Prevent duplicate items in cart
+  @@index([userId]) // Index for faster queries
+  @@map("cart_items") // Use snake_case for database table name
 }
