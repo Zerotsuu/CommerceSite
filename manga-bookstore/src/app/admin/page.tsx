@@ -351,7 +351,7 @@ export default function AdminDashboard() {
 
       {editingManga && (
   <MangaEditDialog
-    manga={editingManga!}
+    manga={editingManga}
     isOpen={!!editingManga}
     onClose={() => setEditingManga(null)}
     onUpdate={() => {
