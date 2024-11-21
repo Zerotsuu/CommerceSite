@@ -27,7 +27,7 @@ export default function AddToCartButton({ mangaId }: { mangaId: number }) {
         title: "Added to cart",
         description: "The manga has been added to your cart.",
       })
-    } catch (error) {
+    } catch{
       toast({
         title: "Error",
         description: "Failed to add the manga to your cart.",

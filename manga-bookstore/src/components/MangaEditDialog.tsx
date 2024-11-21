@@ -14,8 +14,6 @@ import { Loader2, AlertTriangle } from "lucide-react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { UploadButton } from "@uploadthing/react";
-import { OurFileRouter } from "@/app/api/uploadthing/core";
 import { CustomUploadButton } from "@/components/UploadButton";
 
 interface MangaEditDialogProps {
@@ -77,7 +75,7 @@ export function MangaEditDialog({
                 title: "Success",
                 description: "Image updated successfully",
             });
-        } catch (error) {
+        } catch {
             toast({
                 title: "Error",
                 description: "Failed to update image",
@@ -101,7 +99,7 @@ export function MangaEditDialog({
                 title: "Success",
                 description: "Image reset to Anilist version",
             });
-        } catch (error) {
+        } catch {
             toast({
                 title: "Error",
                 description: "Failed to reset image",
@@ -145,7 +143,7 @@ export function MangaEditDialog({
             });
             onUpdate();
             onClose();
-        } catch (error) {
+        } catch {
             setError('Failed to update manga');
             toast({
                 title: "Error",

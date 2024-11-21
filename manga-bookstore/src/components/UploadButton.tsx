@@ -1,5 +1,5 @@
 import { useState, useRef } from "react";
-import { generateClientDropzoneAccept } from "uploadthing/client";
+
 import { useUploadThing } from "@/lib/uploadthing";
 import { Button } from "@/components/ui/button";
 import { ImageIcon, Loader2 } from "lucide-react";

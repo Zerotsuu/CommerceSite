@@ -46,7 +46,7 @@ export default function CartItems({ initialCartItems }: { initialCartItems: Cart
         title: "Cart updated",
         description: "The quantity has been updated.",
       })
-    } catch (error) {
+    } catch {
       toast({
         title: "Error",
         description: "Failed to update the cart.",
@@ -75,7 +75,7 @@ export default function CartItems({ initialCartItems }: { initialCartItems: Cart
         title: "Item removed",
         description: "The item has been removed from your cart.",
       })
-    } catch (error) {
+    } catch {
       toast({
         title: "Error",
         description: "Failed to remove the item from your cart.",

@@ -1,6 +1,6 @@
 'use client'
 import React, { useState, useCallback, useEffect } from 'react';
-import { Search, Plus, RefreshCw, Trash, ArrowUpDown, Link, Edit, ImageIcon } from 'lucide-react';
+import { RefreshCw, Trash, ArrowUpDown, Link, Edit, ImageIcon } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
@@ -22,12 +22,7 @@ import {
 import { ImportDialog } from "@/components/ImportDialog";
 import { MangaEditDialog } from "@/components/MangaEditDialog";
 import { useToast } from "@/hooks/use-toast";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+
 import debounce from 'lodash/debounce';
 
 type Manga = {
@@ -78,7 +73,7 @@ export default function AdminDashboard() {
       const data = await response.json();
       setManga(data.manga || []);
       setTotalPages(data.totalPages || 1);
-    } catch (error) {
+    } catch {
       toast({
         title: "Error",
         description: "Failed to load manga",
@@ -118,7 +113,7 @@ export default function AdminDashboard() {
         title: "Success",
         description: "Manga details updated from Anilist",
       });
-    } catch (error) {
+    } catch {
       toast({
         title: "Error",
         description: "Failed to update manga details",
@@ -137,7 +132,7 @@ export default function AdminDashboard() {
         title: "Success",
         description: "Manga deleted successfully",
       });
-    } catch (error) {
+    } catch {
       toast({
         title: "Error",
         description: "Failed to delete manga",

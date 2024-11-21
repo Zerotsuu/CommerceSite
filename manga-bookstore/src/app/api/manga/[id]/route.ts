@@ -1,7 +1,7 @@
 // app/api/manga/[id]/route.ts
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
+ 
+ 
+ 
 import { type NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { auth } from '@clerk/nextjs/server';
@@ -23,7 +23,7 @@ export async function GET(
     }
 
     return NextResponse.json(manga);
-  } catch (error) {
+  } catch {
     return NextResponse.json(
       { error: 'Failed to fetch manga' },
       { status: 500 }
@@ -62,7 +62,7 @@ export async function PATCH(
 
     // Remove any undefined values from the update data
     const updateData = Object.fromEntries(
-      Object.entries(data).filter(([_, value]) => value !== undefined)
+      Object.entries(data).filter(([value]) => value !== undefined)
     );
 
     // Validate numeric fields

@@ -4,15 +4,14 @@ import { useState, useEffect } from 'react'
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { BookOpen, ShoppingCart, Menu } from 'lucide-react'
 import Link from "next/link"
 import Image from "next/image"
-import { SignInButton, SignOutButton, useUser } from "@clerk/nextjs"
+
 import MangaSearch from '@/components/MangaSearch'
 import Pagination from '@/components/Pagination'
 
 export default function MangaBookstore() {
-  const { isSignedIn, user } = useUser()
+
   const [manga, setManga] = useState([])
   const [page, setPage] = useState(1)
   const [totalPages, setTotalPages] = useState(1)
@@ -46,7 +45,13 @@ export default function MangaBookstore() {
           <div className="container mx-auto px-4">
             <h2 className="text-3xl font-bold mb-8 text-center">Manga Catalog</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-              {manga.map((item:any) => (
+              {manga.map((item: {
+                id: string;
+                image: string;
+                title: string;
+                author: string;
+                price: number;
+              }) => (
                 <Card key={item.id}>
                   <CardHeader>
                     <Image

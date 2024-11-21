@@ -12,7 +12,7 @@ const dummyPages = [
   '/placeholder.svg?height=600&width=400&text=Page 3',
 ]
 
-export default function MangaPages({ mangaId }: { mangaId: number }) {
+export default function MangaPages() {
   const [currentPage, setCurrentPage] = useState(0)
 
   const nextPage = () => {

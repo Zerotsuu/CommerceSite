@@ -4,12 +4,12 @@ import { createUploadthing, type FileRouter } from "uploadthing/next";
  
 const f = createUploadthing();
  
-const auth = (req: Request) => ({ id: "admin" }); // Add your real auth logic here
+const auth = () => ({ id: "admin" }); // Add your real auth logic here
  
 export const ourFileRouter = {
   mangaImage: f({ image: { maxFileSize: "4MB", maxFileCount: 1 } })
-    .middleware(async ({ req }) => {
-      const user = await auth(req);
+    .middleware(async () => {
+      const user = await auth();
       if (!user) throw new Error("Unauthorized");
       return { userId: user.id };
     })

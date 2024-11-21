@@ -1,8 +1,8 @@
 'use client'
-import React, { useState } from 'react'
+import React from 'react'
 import Link from 'next/link'
 import { SignInButton, SignOutButton, useUser } from "@clerk/nextjs"
-import { BookOpen, ShoppingCart, Menu, X } from 'lucide-react'
+import { BookOpen, ShoppingCart, Menu } from 'lucide-react'
 import { Button } from "@/components/ui/button"
 import {
   Sheet,
@@ -12,7 +12,7 @@ import {
 
 export default function Navigation() {
   const { isSignedIn, user } = useUser()
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  
 
   const navigationLinks = [
     { href: "/", label: "Home" },

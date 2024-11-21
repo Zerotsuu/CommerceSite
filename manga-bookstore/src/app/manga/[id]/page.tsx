@@ -1,7 +1,6 @@
 import { prisma } from '@/lib/prisma'
 import { notFound } from 'next/navigation'
 import Image from 'next/image'
-import { Button } from "@/components/ui/button"
 import AddToCartButton from '@/components/AddToCartButton'
 import MangaPages from '@/components/MangaPages'
 
@@ -36,7 +35,7 @@ export default async function MangaPage({ params }: { params: { id: string } }) 
       </div>
       <div className="mt-12">
         <h2 className="text-2xl font-bold mb-4">Preview Pages</h2>
-        <MangaPages mangaId={manga.id} />
+        <MangaPages />
       </div>
     </div>
   )
